@@ -16,59 +16,51 @@ dict_ip = defaultdict(
 
 list_files_of_directory = os.listdir(args.path)
 
+
+
+
 for file in list_files_of_directory:
     with open(args.path + f'{file}') as log:
         for line in log:
             ip_match = re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", line)
+            time_1 = re.search(r'\d+$', line)
             if ip_match is not None:
+
                 ip = ip_match.group()
-                try:
-                    method = re.search(r'\] \"(POST|GET|PUT|PATCH|DELETE|HEAD)', line).groups()[0]
+                method = re.search(r'\] \"(POST|GET|PUT|PATCH|DELETE|HEAD)', line)
+                url = line.split()[6]
+                if method is not None:
+                    method = method.groups()[0]
                     count_request += 1
-                except AttributeError:
-                    break
-                dict_ip[ip][method] += 1
+                    dict_ip[ip][method] += 1
+                    if time_1 is not None:
+                        time_1 = time_1.group()
+                        dict_ip[ip]['time'] = time_1
+                        dict_ip[ip]['url'] = url
+
+
+# def counter_ip_adresse():
+#     counter = 0
+#     for file in list_files_of_directory:
+#         with open(args.path + f'{file}') as log:
+#             for line in log:
+#                 request = re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", line)
+#                 if request is not None:
+#                     counter += 1
+#                     request.group()
+#     return counter
 
 
 
 
-
-def counter_type_of_request(type_of_request: str):
-    counter = 0
-    for file in list_files_of_directory:
-        with open(args.path + f'{file}') as log:
-            for line in log:
-                request = re.search(rf'\] \"({type_of_request})', line)
-                if request is not None:
-                    counter += 1
-                    request.group()
-
-    return counter
-
-
-def counter_ip_adresse():
-    counter = 0
-    for file in list_files_of_directory:
-        with open(args.path + f'{file}') as log:
-            for line in log:
-                request = re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", line)
-                if request is not None:
-                    counter += 1
-                    request.group()
-
-    return counter
-
-
-
-
-print(counter_type_of_request("GET"))
-print(counter_type_of_request("POST"))
-print(counter_type_of_request("PUT"))
-print(counter_type_of_request("DELETE"))
-print(counter_type_of_request("HEAD"))
-
+# print(counter_type_of_request("GET"))
+# print(counter_type_of_request("POST"))
+# print(counter_type_of_request("PUT"))
+# print(counter_type_of_request("DELETE"))
+# print(counter_type_of_request("HEAD"))
+#
 
 
 print(json.dumps(dict_ip, indent=4))
-print(f"количетство запросов равно {counter_ip_adresse()}")
+# print(f"количетство запросов равно {counter_ip_adresse()}")
 
