@@ -44,7 +44,7 @@ def top_3_log_parser(file_list):
                     if time_r is not None:
                         time_r = int(time_r.group())
                         url = line.split()[6]
-                        for i in range(3, 0, -1):
+                        for i in range(1, 4):
                             if time_r > top_requests[f'#{i}']['time']:
                                 if top_requests[f'#{i}']['time'] != ip_match:
                                     top_requests[f'#{i}']['time'] = time_r
@@ -65,12 +65,11 @@ def count_request_parser(file_list):
             return count_request
 
 
-
 def top_3_ip_cont_request(file_list):
     cont_requests = {}
     top_ip = {"#1": {'ip': '', 'count': 0},
-            "#2": {'ip': '', 'count': 0},
-            "#3": {'ip': '', 'count': 0}}
+              "#2": {'ip': '', 'count': 0},
+              "#3": {'ip': '', 'count': 0}}
     for file in file_list:
         with open(args.path + f'{file}') as log:
             for line in log:
@@ -81,16 +80,13 @@ def top_3_ip_cont_request(file_list):
                         cont_requests[ip_match] += 1
                     except:
                         cont_requests[ip_match] = 1
-
-
             for ip in cont_requests:
-                for i in range(3, 0, -1):
+                for i in range(1, 4):
                     if top_ip[f'#{i}']['count'] < cont_requests[ip]:
                         top_ip[f'#{i}']['ip'] = ip
                         top_ip[f'#{i}']['count'] = cont_requests[ip]
                         break
             return top_ip
-
 
 
 def counter_requests(file_list):
@@ -104,17 +100,9 @@ def counter_requests(file_list):
                     if method is not None:
                         method = method.groups()[0]
                         dict_requests[method] += 1
-
-
             return dict_requests
 
 
-
-
-
-
-# print(json.dumps(log_parser(file_list_of_directory), indent=4))
-# print(json.dumps(top_3_log_parser(file_list_of_directory), indent=4))
-# print(json.dumps(counter_requests(file_list_of_directory), indent=2))
-# print(json.dumps(top_3_ip_cont_request(file_list_of_directory), indent=2))
-print(json.dumps(top_3_ip_cont_request(file_list_of_directory), indent=2))
+print(json.dumps(top_3_log_parser(file_list_of_directory), indent=4))
+print(json.dumps(counter_requests(file_list_of_directory), indent=2))
+print(json.dumps(top_3_ip_cont_request(file_list_of_directory), indent=4))
