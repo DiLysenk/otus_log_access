@@ -13,7 +13,6 @@ args = parser.parse_args()
 file_list_of_directory = os.listdir(args.path)
 
 
-
 def log_parser(file_list: list):
     dict_ip = defaultdict(
         lambda: {'GET': 0, 'POST': 0, 'PUT': 0, 'PATCH': 0, 'DELETE': 0, 'HEAD': 0}
@@ -108,6 +107,14 @@ def counter_requests(file_list: list):
             return dict_requests
 
 
-print(json.dumps(top_3_log_parser(file_list_of_directory), indent=4))
-print(json.dumps(counter_requests(file_list_of_directory), indent=2))
-print(json.dumps(top_3_ip_cont_request(file_list_of_directory), indent=4))
+with open("top_3_log_parser.json", 'w') as result_file:
+    json.dump(top_3_log_parser(file_list_of_directory), result_file, indent=4)
+
+with open("counter_requests.json", 'w') as result_file_1:
+    json.dump(counter_requests(file_list_of_directory), result_file_1, indent=4)
+
+with open("top_3_ip_cont_request.json", 'w') as result_file_2:
+    json.dump(top_3_ip_cont_request(file_list_of_directory), result_file_2, indent=4)
+
+with open("count_request_parser.json", 'w') as result_file_3:
+    json.dump(count_request_parser(file_list_of_directory), result_file_3, indent=2)
