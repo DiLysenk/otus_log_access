@@ -13,6 +13,9 @@ args = parser.parse_args()
 file_list_of_directory = os.listdir(args.path)
 
 
+
+
+
 def log_parser(file_list: list):
     dict_ip = defaultdict(
         lambda: {'GET': 0, 'POST': 0, 'PUT': 0, 'PATCH': 0, 'DELETE': 0, 'HEAD': 0}
