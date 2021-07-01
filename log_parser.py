@@ -14,8 +14,6 @@ file_list_of_directory = os.listdir(args.path)
 
 
 
-
-
 def log_parser(file_list: list):
     dict_ip = defaultdict(
         lambda: {'GET': 0, 'POST': 0, 'PUT': 0, 'PATCH': 0, 'DELETE': 0, 'HEAD': 0}
@@ -33,7 +31,8 @@ def log_parser(file_list: list):
             return dict_ip
 
 
-def top_3_log_parser(file_list):
+def top_3_log_parser(file_list: list):
+    """топ 3 самых долгих запросов, url, ip, время запроса """
     top_requests = {'#1': {'ip': '', 'url': '', 'time': 0},
                     '#2': {'ip': '', 'url': '', 'time': 0},
                     '#3': {'ip': '', 'url': '', 'time': 0}}
@@ -57,7 +56,8 @@ def top_3_log_parser(file_list):
             return top_requests
 
 
-def count_request_parser(file_list):
+def count_request_parser(file_list: list):
+    """общее количество выполненных запросов"""
     count_request = 0
     for file in file_list:
         with open(args.path + f'{file}') as log:
@@ -68,7 +68,8 @@ def count_request_parser(file_list):
             return count_request
 
 
-def top_3_ip_cont_request(file_list):
+def top_3_ip_cont_request(file_list: list):
+    '''топ 3 IP адресов, с которых были сделаны запросы'''
     cont_requests = {}
     top_ip = {"#1": {'ip': '', 'count': 0},
               "#2": {'ip': '', 'count': 0},
@@ -92,7 +93,8 @@ def top_3_ip_cont_request(file_list):
             return top_ip
 
 
-def counter_requests(file_list):
+def counter_requests(file_list: list):
+    """количество запросов по типу: GET - 20, POST - 10 и т.п."""
     dict_requests = {'GET': 0, 'POST': 0, 'PUT': 0, 'PATCH': 0, 'DELETE': 0, 'HEAD': 0}
     for file in file_list:
         with open(args.path + f'{file}') as log:
