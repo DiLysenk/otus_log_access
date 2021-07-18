@@ -133,7 +133,7 @@ try:
     os.mkdir("result")
 except:
     pass
-
+ 
 with open(f"result/top_3_log_parser--{file}.json", 'w') as result_file:
     json.dump(top_3_log_parser(file), result_file, indent=4)
 
