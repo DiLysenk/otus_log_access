@@ -5,7 +5,7 @@ import re
 from collections import defaultdict
 
 parser = argparse.ArgumentParser(description="путь для директории")
-parser.add_argument("-f", dest="path", default="logs", action='store', help="Path to logfile")
+parser.add_argument("-f", dest="path", default="logs/", action='store', help="Path to logfile")
 
 args = parser.parse_args()
 
@@ -27,10 +27,6 @@ def files_in_derectory(path):
         print("вы не выбрали файл или нет файла с таким номером")
         exit()
     return choose_file
-
-
-file = files_in_derectory(args.path)
-
 
 def log_parser(file: str):
     dict_ip = defaultdict(
@@ -134,14 +130,12 @@ try:
 except:
     pass
 
-with open(f"result/top_3_log_parser--{file}.json", 'w') as result_file:
-    json.dump(top_3_log_parser(file), result_file, indent=4)
-
-with open(f"result/counter_requests--{file}.json", 'w') as result_file_1:
-    json.dump(counter_requests(file), result_file_1, indent=4)
-
-with open(f"result/top_3_ip_cont_request--{file}.json", 'w') as result_file_2:
-    json.dump(top_3_ip_cont_request(file), result_file_2, indent=4)
-
-with open(f"result/count_request_parser--{file}.json", 'w') as result_file_3:
-    json.dump(count_request_parser(file), result_file_3, indent=2)
+for file in os.listdir(args.path):
+    with open(f"result/log_parser--{file}.json", 'w') as result_file:
+        json.dump(top_3_log_parser(file), result_file, indent=4)
+        result_file.write(",\r\n")
+        json.dump(counter_requests(file), result_file, indent=4)
+        result_file.write(",\r\n")
+        json.dump(top_3_ip_cont_request(file), result_file, indent=4)
+        result_file.write(",\r\n")
+        json.dump(count_request_parser(file), result_file, indent=2)
