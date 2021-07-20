@@ -9,6 +9,7 @@ parser.add_argument("-f", dest="path", default="logs/", action='store', help="Pa
 args = parser.parse_args()
 
 
+
 def top_3_log_parser(agr_path, file_of_log: str, kostil='/'):
     """топ 3 самых долгих запросов, url, ip, время запроса """
     top_requests = {'#1': {'request': '', 'ip': '', 'url': '', 'time': 0},
@@ -95,6 +96,7 @@ try:
     os.mkdir("result")
 except:
     pass
+
 
 if os.path.isfile(args.path):
     file = ""
