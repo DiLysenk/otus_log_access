@@ -2,12 +2,10 @@ import json
 import os
 import argparse
 import re
-from collections import defaultdict
 
 parser = argparse.ArgumentParser(description="путь для директории")
 parser.add_argument("-f", dest="path", default="logs/", action='store', help="Path to logfile")
 args = parser.parse_args()
-
 
 def top_3_log_parser(agr_path, file_of_log: str, kostil='/'):
     """топ 3 самых долгих запросов, url, ip, время запроса """
